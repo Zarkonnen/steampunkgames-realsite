@@ -23,7 +23,7 @@
     <h3 id="ourgames">Some of our games</h3>
     {% for g in games %}
         <div class="game_1">
-            <a href="{{ g.link }}"><img src="/media/{{ g.image }}"></a>
+            <a href="{% url "game" g.slug %}"><img src="/media/{{ g.image }}"></a>
         </div>
     {% endfor %}
     <div style="clear: both;"></div>
