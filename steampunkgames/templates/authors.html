@@ -9,6 +9,7 @@
     <h1>Active Members</h1>
     <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
 </div>
+<p>We are a group blog by a number of Indie developers who like Steampunk. We write both about our own games and about others.</p>
 {% for a in authors %}
 <h3><a href="{% url "author" a.username %}">{{ a.profile.displayName }}</a></h3>
 <a href="{% url "author" a.username %}"><img src="/media/{{ a.profile.image }}" id="profileImage"></a>

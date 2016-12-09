@@ -37,7 +37,7 @@ Page {{ page }}
 {% if hasNext %}
     <a href="{% url "page" nextIndex %}">➡</a>
 {% endif %}
-• <a href="{% url "authors" %}">Our Authors</a> • <a href="{% url "games" %}">All Games</a> •
+• <a href="{% url "authors" %}">About</a> • <a href="{% url "games" %}">All Games</a> •
 {% if user.is_authenticated %}
     <a href="{% url "dashboard" %}">Dashboard</a>
 {% else %}
