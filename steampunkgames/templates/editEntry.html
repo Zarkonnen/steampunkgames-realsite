@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script src="{% static "steampunkgames/jquery-3.1.1.min.js" %}"></script>
+<script>tinymce.init({ selector:'#id_text', plugins: ["image"], image_list: [
+{% for i in user.images.all %}
+{ "title": "/media/{{ i.image }}", "value": "/media/{{ i.image }}" },
+{% endfor %}
+] });</script>
+{% endblock %}
+
+{% block title %}Edit Article - Steampunk Games{% endblock %}
+
+{% block content %}
+<div style="float: right">
+<h3>Tools</h3>
+<p>State: {{ entry.displayState }}</p>
+<p id="unsavedChanges" style="display: none;">Unsaved changes<br>
+<input type="submit" value="Save" onClick="jQuery('#saveButton').click()">
+</p>
+{% if entry.published %}
+    <form method="GET" action="{% url "entry" entry.activeSlug %}">
+        <input type="submit" value="View current version" class="entryTool">
+    </form>
+    <form method="POST" action="{% url "editEntry" entry.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="command" value="update">
+        <input type="submit" value="Update" class="entryTool">
+    </form>
+    <form method="POST" action="{% url "editEntry" entry.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="command" value="unpublish">
+        <input type="submit" value="Unpublish" class="entryTool">
+    </form>
+    <form method="POST" action="{% url "editEntry" entry.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="command" value="revert">
+        <input type="submit" value="Revert to published version" class="entryTool">
+    </form>
+{% else %}
+    <form method="POST" action="{% url "editEntry" entry.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="command" value="publish">
+        <input type="submit" value="Publish" class="entryTool">
+    </form>
+{% endif %}
+<form method="POST" action="{% url "editEntry" entry.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="command" value="delete">
+    <input type="submit" value="Delete" class="entryTool">
+</form>
+</div>
+<h3>Draft Version Editor</h3>
+{% for e in commandErrors %}
+    <p class="commandError">{{ e }}</p>
+{% endfor %}
+<form method="POST" action="{% url "editEntry" entry.id %}">
+    {% csrf_token %}
+    <table class="editor">
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Save" id="saveButton">
+</form>
+
+<script>
+function isElementInViewport (el) {
+    //special bonus for those using jQuery
+    if (typeof jQuery === "function" && el instanceof jQuery) {
+        el = el[0];
+    }
+
+    var rect = el.getBoundingClientRect();
+
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /*or $(window).height() */
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth) /*or $(window).width() */
+    );
+}
+
+setInterval(function() {
+    jQuery(".mce-menu-item.mce-menu-item-normal.mce-stack-layout-item span").each(function() {
+        var el = jQuery(this);
+        if (el.html().startsWith("http") || el.html().startsWith("/media/")) {
+            if (isElementInViewport(el)) {
+                el.html('<img src="' + el.html() + '" style="height: 80px;">');
+            }
+        }
+    });
+}, 100);
+
+function dirty() {
+    jQuery(".entryTool").prop("disabled", true);
+    jQuery("#unsavedChanges").show();
+}
+
+jQuery("#id_game, #id_title, #id_slug, #id_lede, #id_text").keyup(dirty).paste(dirty);
+</script>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "dashboard" %}">Dashboard</a>
+{% endblock %}

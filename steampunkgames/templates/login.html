@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contributor Login - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Contributor Login</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<form method="POST" action="{% url "login" %}">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <th><label for="username">Username</label></th>
+        <td><input type="text" name="username"></td>
+    </tr>
+    <tr>
+        <th><label for="password">Password</label></th>
+        <td><input type="password" name="password"></td>
+    </tr>
+    </table>
+    <input type="submit" value="Login">
+</form>
+{% endblock %}

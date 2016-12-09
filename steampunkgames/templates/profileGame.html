@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Game - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Your Game</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<img src="/media/{{ user.game.image }}" id="editProfileGameImage">
+<form method="POST" action="{% url "profileGame" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="editor">
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Update">
+</form>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "dashboard" %}">Dashboard</a>
+{% endblock %}

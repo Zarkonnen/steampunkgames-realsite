@@ -1,0 +1,21 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Steampunk Games{% endblock %}</title>
+        <link href="{% static "steampunkgames/style.css" %}" rel="stylesheet" type="text/css" media="screen">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div id="content">
+            {% block content %}{% endblock %}
+            
+            <div id="footer">
+                {% block footer %}<a href="{% url "home" %}">Home</a>{% endblock %}
+            </div>
+            
+        </div>
+    </body>
+</html>

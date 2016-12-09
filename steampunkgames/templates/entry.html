@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ entry.activeTitle }} - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>{{ entry.activeTitle }}</h1>
+    <div class="tagline">{{ entry.activeLede }}</div>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+{% if entry.game %}
+<div id="gameInfo">
+    <a href="{% url "game" entry.game.slug %}">{{ entry.game.name }}</a>
+    <a href="{% url "game" entry.game.slug %}"><img src="/media/{{ entry.game.image }}"></a>
+</div>
+{% endif %}
+<div id="authorInfo">
+    <a href="{% url "author" entry.owner.username %}"><img src="/media/{{ entry.owner.profile.image }}" id="authorImage"></a>
+    <a href="{% url "author" entry.owner.username %}">{{ entry.owner.profile.displayName }}</a>
+    {% if entry.owner.profile.twitter %}
+        <a href="{{entry.owner.profile.twitter}}"><img src="{% static "steampunkgames/img/twitter.png" %}" style="position: relative; top: 4px; left: 0.5em;"></a>
+    {% endif %}
+</div>
+<div id="main">
+    {{ entry.activeText|safe }}
+</div>
+{% endblock %}

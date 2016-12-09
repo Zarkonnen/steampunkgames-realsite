@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contributor Dashboard - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Contributor Dashboard</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<p>You are {{ user.profile.displayName }} [<a href="{% url "profile" %}">Edit</a>] and your game is {{ user.game.name }} [<a href="{% url "profileGame" %}">Edit</a>].</p>
+
+<p>[<a href="{% url "images" %}">Upload and Manage Images</a>]</p>
+
+<h3>Articles</h3>
+<form method="POST" action="{% url "dashboard" %}">
+    {% csrf_token %}
+    <input type="submit" value="Create new Article">
+</form>
+<table id="articles">
+<tr>
+<th>Title</th>
+<th>Date</th>
+<th>Status</th>
+</tr>
+{% for e in entries %}
+<tr>
+    <td><a href="{% url "editEntry" e.id %}">{{e.displayTitle}}</a></td>
+    <td>{{e.posted}}</td>
+    <td>{{e.displayState}}</td>
+</tr>
+{% empty %}
+<td>You have no articles. Use the button above to create one.</td>
+{% endfor %}
+</table>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "home" %}">Home</a> •
+<form method="POST" action="{% url "logout" %}" style="display: inline;">
+    {% csrf_token %}
+    <input type="submit" value="Logout">
+</form>
+{% endblock %}

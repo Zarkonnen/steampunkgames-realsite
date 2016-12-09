@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Image Manager - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Image Manager</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+
+<p><form method="POST" action="{% url "images" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_table}}
+    <input type="submit" value="Upload">
+</form></p>
+
+{% for i in images %}
+<div class="managerImage">
+<a href="/media/{{i.image}}"><img src="/media/{{i.image}}" style="height: 4em; max-width: 8em;"></a>
+<form method="POST" action="{% url "images" %}">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="{{i.id}}">
+    <input type="submit" value="Delete">
+</form>
+</div>
+{% empty %}
+<p>You have no images. Use the form above to upload one.</p>
+{% endfor %}
+<div style="clear: both;"></div>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "dashboard" %}">Dashboard</a>
+{% endblock %}

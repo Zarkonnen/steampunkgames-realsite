@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Active Members - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Active Members</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+{% for a in authors %}
+<h3><a href="{% url "author" a.username %}">{{ a.profile.displayName }}</a></h3>
+<a href="{% url "author" a.username %}"><img src="/media/{{ a.profile.image }}" id="profileImage"></a>
+<div id="bio">{{ a.profile.bio }}
+{% if a.profile.website %}
+    <p><a href="{{ a.profile.website }}">Website</a></p>
+{% endif %}
+{% if a.profile.twitter %}
+    <p><a href="{{ a.profile.twitter }}">Twitter</a></p>
+{% endif %}
+</div>
+<div style="clear: both;"></div>
+{% endfor %}
+{% endblock %}

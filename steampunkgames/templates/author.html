@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ author.profile.displayName }} - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>{{ author.profile.displayName }}</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<h3>Bio</h3>
+<img src="/media/{{ author.profile.image }}" id="profileImage">
+<div id="bio">{{ author.profile.bio }}
+{% if author.profile.website %}
+    <p><a href="{{ author.profile.website }}">Website</a></p>
+{% endif %}
+{% if author.profile.twitter %}
+    <p><a href="{{ author.profile.twitter }}">Twitter</a></p>
+{% endif %}
+</div>
+<div style="clear: both;"></div>
+<h3><a href="{% url "game" author.game.slug %}">{{ author.game.name }}</a></h3>
+<a href="{% url "game" author.game.slug %}"><img src="/media/{{ author.game.image }}" id="profileGameImage"></a>
+<div id="profileGame">{{ author.game.description }}</div>
+<div style="clear: both;"></div>
+<h3>Articles</h3>
+<div class="newsfeed">
+    {% for e in entries %}
+    <div class="newsitem">
+        <a href="{% url "entry" e.activeSlug %}" class="newstitle"><h3>{{ e.activeTitle }}</h3><p class="date">{{ e.posted }}</p><img src="{% static "steampunkgames/img/ruler.png" %}" class="ruler"></a>
+        <p>{{ e.activeLede }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

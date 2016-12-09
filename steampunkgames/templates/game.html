@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ game.name }} - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>{{ game.name }}</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<img src="/media/{{ game.image }}" id="profileGameImage">
+<div id="profileGame">{{ game.description }}
+{% if game.link %}
+<p><a href="{{game.link}}">Website</a></p>
+{% endif %}
+{% if game.owner %}
+<p>by <a href="{% url "author" game.owner.username %}">{{ game.owner.profile.displayName }}</a></p>
+{% endif %}
+</div>
+<div style="clear: both;"></div>
+<h3>Articles</h3>
+<div class="newsfeed">
+    {% for e in entries %}
+    <div class="newsitem">
+        <a href="{% url "entry" e.activeSlug %}" class="newstitle"><h3>{{ e.activeTitle }}</h3><p class="date">{{ e.posted }}</p><img src="{% static "steampunkgames/img/ruler.png" %}" class="ruler"></a>
+        <p>{{ e.activeLede }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

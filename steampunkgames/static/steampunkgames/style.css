@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css?family=Bitter');
+html {
+  background: #241a10;
+  background-image: url('img/bgbgnoise.png');
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 13pt;
+  font-family: 'Bitter', 'Times', serif;
+  line-height: 140%;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 2rem;
+  background-image: url('img/steamengine2.png');
+  /*background-size: 450px;
+    background-repeat: no-repeat;*/
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+  color: #a53030;
+  font-weight: normal;
+  text-align: center;
+}
+p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+a:link {
+  color: #a53030;
+  text-decoration: none;
+}
+a:hover,
+a:active,
+a:visited {
+  color: #750000;
+  text-decoration: none;
+}
+#content {
+  max-width: 50rem;
+  padding: 2rem;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color: #ecdccc;
+  background-image: url('img/bgnoise.png');
+  border: 1px solid #887b6e;
+  position: relative;
+  box-shadow: 0 0 20px #000000, inset 0 0 8px #ffffff;
+}
+#header {
+  text-align: center;
+  padding-bottom: 1em;
+}
+#header h1 {
+  margin: 0.5rem;
+}
+.tagline {
+  color: #4a3521;
+  text-transform: uppercase;
+  margin: 0.4rem;
+}
+.newsitem {
+  margin-bottom: 2em;
+}
+.newstitle {
+  text-align: center;
+  display: block;
+}
+.newstitle h3 {
+  margin-bottom: 0;
+}
+.newstitle .date {
+  color: #4a3521;
+  margin: 0;
+  font-size: 70%;
+}
+#ourgames {
+  text-align: center;
+  margin-top: 1em;
+}
+#right {
+  width: 30%;
+  margin-left: 70%;
+}
+#left {
+  float: left;
+  width: 65%;
+}
+.game_1 img {
+  width: 100%;
+  margin-bottom: 1em;
+  border: 1px solid #887b6e;
+}
+
+#authorImage, #gameInfo img {
+  height: 4em;
+  border: 1px solid #887b6e;
+  vertical-align: middle;
+}
+
+#gameInfo {
+    float: right;
+}
+
+#gameInfo img { margin-left: 1em; }
+#authorImage { margin-right: 1em; }
+
+#main {
+  margin-top: 1em;
+}
+
+#profileImage, #profileGameImage {
+  float: left;
+  width: 8em;
+  border: 1px solid #887b6e;
+}
+
+#editProfileImage, #editProfileGameImage {
+  float: right;
+  width: 8em;
+  border: 1px solid #887b6e;
+}
+
+#bio, #profileGame {
+  margin-left: 9em;
+}
+
+#footer {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.editor th {
+  font-weight: normal;
+  text-align: right;
+  padding-right: 1em;
+  vertical-align: top;
+}
+
+#articles th {
+  text-align: left;
+  text-transform: uppercase;
+}
+
+#articles td, #articles th {
+  padding-right: 2em;
+  padding-top: 1em;
+}
+
+.managerImage {
+    float: left;
+    margin-right: 2em;
+    margin-bottom: 2em;
+}
+
+.managerImage img {
+  height: 8em;
+  max-width: 8em;
+  border: 1px solid #887b6e;
+}
+
+.commandError {
+    color: red;
+    margin: 0;
+}

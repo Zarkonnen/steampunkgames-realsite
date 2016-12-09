@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Steampunk Games</h1>
+    <div class="tagline">Steampunk • Dieselpunk • Victorian • Lovecraftian • Weird</div>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<div id="left">
+    <div class="newsfeed">
+        {% for e in entries %}
+        <div class="newsitem">
+            <a href="{% url "entry" e.activeSlug %}" class="newstitle"><h3>{{ e.activeTitle }}</h3><p class="date">{{ e.owner.profile.displayName }}, {{ e.posted }}</p><img src="{% static "steampunkgames/img/ruler.png" %}" class="ruler"></a>
+            <p>{{ e.activeLede }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div id="right">
+    <h3 id="ourgames">Some of our games</h3>
+    {% for g in games %}
+        <div class="game_1">
+            <a href="{{ g.link }}"><img src="/media/{{ g.image }}"></a>
+        </div>
+    {% endfor %}
+    <div style="clear: both;"></div>
+</div>
+{% endblock %}
+{% block footer %}
+{% if hasPrev %}
+    <a href="{% url "page" prevIndex %}">⬅</a>
+{% endif %}
+Page {{ page }}
+{% if hasNext %}
+    <a href="{% url "page" nextIndex %}">➡</a>
+{% endif %}
+• <a href="{% url "authors" %}">Our Authors</a> • <a href="{% url "games" %}">All Games</a> •
+{% if user.is_authenticated %}
+    <a href="{% url "dashboard" %}">Dashboard</a>
+{% else %}
+    <a href="{% url "login" %}">Login</a>
+{% endif %}
+{% endblock %}
