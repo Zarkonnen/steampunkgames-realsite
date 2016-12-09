@@ -7,7 +7,6 @@
 <div id="header">
     <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
     <h1>{{ entry.activeTitle }}</h1>
-    <div class="tagline">{{ entry.activeLede }}</div>
     <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
 </div>
 {% if entry.game %}
@@ -24,6 +23,7 @@
     {% endif %}
 </div>
 <div id="main">
+    <p>{{ entry.activeLede }}</p>
     {{ entry.activeText|safe }}
 </div>
 {% endblock %}
