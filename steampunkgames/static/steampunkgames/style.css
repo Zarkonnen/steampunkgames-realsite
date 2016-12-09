@@ -95,12 +95,12 @@ a:visited {
 .game_1 img {
   width: 100%;
   margin-bottom: 1em;
-  border: 1px solid #887b6e;
+  border: none;
 }
 
 #authorImage, #gameInfo img {
   height: 4em;
-  border: 1px solid #887b6e;
+  border: none;
   vertical-align: middle;
 }
 
@@ -118,13 +118,13 @@ a:visited {
 #profileImage, #profileGameImage {
   float: left;
   width: 8em;
-  border: 1px solid #887b6e;
+  border: none;
 }
 
 #editProfileImage, #editProfileGameImage {
   float: right;
   width: 8em;
-  border: 1px solid #887b6e;
+  border: none;
 }
 
 #bio, #profileGame {
@@ -162,7 +162,7 @@ a:visited {
 .managerImage img {
   height: 8em;
   max-width: 8em;
-  border: 1px solid #887b6e;
+  border: none;
 }
 
 .commandError {
