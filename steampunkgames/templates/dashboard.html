@@ -12,6 +12,7 @@
 <p>You are {{ user.profile.displayName }} [<a href="{% url "profile" %}">Edit</a>] and your game is {{ user.game.name }} [<a href="{% url "profileGame" %}">Edit</a>].</p>
 
 <p>[<a href="{% url "images" %}">Upload and Manage Images</a>]</p>
+<p>[<a href="{% url "manageGames" %}">Create and Manage Other Games</a>]</p>
 
 <h3>Articles</h3>
 <form method="POST" action="{% url "dashboard" %}">

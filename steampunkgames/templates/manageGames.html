@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Game Manager - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Game Manager</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+
+<p><form method="POST" action="{% url "manageGames" %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="editor">
+    {{form.as_table}}
+    </table>
+    <input type="submit" value="Create new game">
+</form></p>
+
+
+<h3>Games</h3>
+{% for g in games %}
+<div class="managerGame" style="clear: both;">
+<a href="{% url "editGame" g.id %}"><img src="/media/{{g.image}}" style="height: 4em; max-width: 8em; margin-right: 1em; float: left;"> {{g.name}}</a> {{g.description}}
+</div>
+{% endfor %}
+<div style="clear: both;"></div>
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "dashboard" %}">Dashboard</a>
+{% endblock %}

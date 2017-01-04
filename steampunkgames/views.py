@@ -7,10 +7,22 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
 from datetime import datetime
+from django.conf import settings
 import random
 
 ENTRIES_PER_PAGE = 10
 OUR_GAMES_PER_PAGE = 3
+
+def secure(view_func):
+    """Decorator makes sure URL is accessed over https."""
+    def _wrapped_view_func(request, *args, **kwargs):
+        if not request.is_secure():
+            if getattr(settings, 'HTTPS_SUPPORT', True):
+                request_url = request.build_absolute_uri(request.get_full_path())
+                secure_url = request_url.replace('http://', 'https://')
+                return HttpResponseRedirect(secure_url)
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view_func
 
 def shuffled(l):
     l = list(l)
@@ -40,6 +52,13 @@ def game(request, slug):
 def entry(request, slug):
     return render(request, "entry.html", {"entry": go4(Entry, activeSlug=slug, state="pu")})
 
+def entryDraft(request, slug, secret):
+    entry = go4(Entry, slug=slug)
+    if entry.secret != secret:
+        return HttpResponseForbidden()
+    return render(request, "entryDraft.html", {"entry": entry})
+
+@secure
 def doLogin(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -52,11 +71,13 @@ def doLogin(request):
         return HttpResponseRedirect(reverse('home'))
     return render(request, "login.html")
 
+@secure
 def doLogout(request):
     if request.method == 'POST':
         logout(request)
     return HttpResponseRedirect(reverse('home'))
-    
+
+@secure
 def dashboard(request):
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -71,6 +92,7 @@ class ProfileForm(ModelForm):
         model=Profile
         fields=["name", "bio", "website", "twitter", "image"]
 
+@secure
 def profile(request):
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -87,6 +109,7 @@ class ProfileGameForm(ModelForm):
         model=Game
         fields=["name", "link", "description", "image"]
 
+@secure
 def profileGame(request):
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -103,6 +126,7 @@ class EntryForm(ModelForm):
         model=Entry
         fields=["game", "title", "slug", "lede", "text"]
 
+@secure
 def editEntry(request, entryID):
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -162,6 +186,7 @@ class ImageForm(ModelForm):
         model=Image
         fields=["image"]
 
+@secure
 def images(request):
     if not request.user.is_authenticated():
         return HttpResponseForbidden()
@@ -176,3 +201,36 @@ def images(request):
                 form.save()
                 return HttpResponseRedirect(reverse('images'))
     return render(request, "images.html", {"form": form, "images": request.user.images.order_by("-posted")})
+
+class GameForm(ModelForm):
+    class Meta:
+        model=Game
+        fields=["name", "slug", "link", "description", "image"]
+
+@secure
+def manageGames(request):
+    if not request.user.is_authenticated():
+        return HttpResponseForbidden()
+    game = Game()
+    form = GameForm(instance=game)
+    if request.method == "POST":
+        form = GameForm(request.POST, request.FILES, instance=game)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('manageGames'))
+    return render(request, "manageGames.html", {"form": form, "games": Game.objects.filter(owner=None).order_by("name").all()})
+
+@secure
+def editGame(request, gameID):
+    if not request.user.is_authenticated():
+        return HttpResponseForbidden()
+    game = go4(Game, id=gameID)
+    if game.owner:
+        return HttpResponseForbidden()
+    form = GameForm(instance=game)
+    if request.method == 'POST':
+        form = GameForm(request.POST, request.FILES, instance=game)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('editGame', args=[slug]))
+    return render(request, "editGame.html", {"game": game, "form": form})

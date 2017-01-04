@@ -123,3 +123,5 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = '/home/zar/Desktop/Projects/steampunk-games/realsite/media'
 
 MEDIA_URL = '/media/'
+
+HTTPS_SUPPORT = False

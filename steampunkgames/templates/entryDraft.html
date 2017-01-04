@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ entry.activeTitle }} - Steampunk Games{% endblock %}
+{% block title %}{{ entry.title }} - Steampunk Games{% endblock %}
 
 {% block content %}
 <div id="header">
     <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
-    <h1>{{ entry.activeTitle }}</h1>
+    <h1>{{ entry.title }}</h1>
     <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
 </div>
 {% if entry.game %}
@@ -28,7 +28,8 @@
     {% endif %}
 </div>
 <div id="main">
-    <p>{{ entry.activeLede }}</p>
-    {{ entry.activeText|safe }}
+    <p>This is an article preview. You can share this secret URL with others to let them see the article before you publish it.</p>
+    <p>{{ entry.lede }}</p>
+    {{ entry.text|safe }}
 </div>
 {% endblock %}

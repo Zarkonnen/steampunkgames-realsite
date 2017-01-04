@@ -13,7 +13,16 @@
     <div class="newsfeed">
         {% for e in entries %}
         <div class="newsitem">
-            <a href="{% url "entry" e.activeSlug %}" class="newstitle"><h3>{{ e.activeTitle }}</h3><p class="date">{{ e.owner.profile.displayName }}, {{ e.posted }}</p><img src="{% static "steampunkgames/img/ruler.png" %}" class="ruler"></a>
+            <a href="{% url "entry" e.activeSlug %}" class="newstitle"><h3>{{ e.activeTitle }}</h3>
+            <p class="date">
+                {% if e.devLog %}
+                    <abbr title="An article by a game creator about their own game.">Dev Log</abbr> by
+                {% else %}
+                    <abbr title="An article by a game creator about a topic other than their own game.">Article</abbr> by
+                {% endif %}
+            {{ e.owner.profile.displayName }}, {{ e.posted }}
+            </p>
+            <img src="{% static "steampunkgames/img/ruler.png" %}" class="ruler"></a>
             <p>{{ e.activeLede }}</p>
         </div>
         {% endfor %}

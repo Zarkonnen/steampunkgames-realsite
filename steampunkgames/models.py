@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timedelta, date
+import hashlib
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name="profile")
@@ -29,10 +30,14 @@ class Profile(models.Model):
 class Game(models.Model):
     owner = models.OneToOneField(User, related_name="game", blank=True, null=True)
     name = models.CharField(max_length=1000)
-    slug = models.CharField(max_length=1000)
+    slug = models.SlugField(max_length=1000)
     link = models.CharField(default="", max_length=1000, blank=True)
     description = models.TextField(default="", blank=True)
     image = models.FileField(upload_to='game_images/', blank=True)
+    
+    @property
+    def deletable(self):
+        return not self.owner and len(self.entries.all()) == 0
     
     @property
     def onList(self):
@@ -56,13 +61,29 @@ class Entry(models.Model):
     game = models.ForeignKey(Game, related_name="entries", blank=True, null=True)
     state = models.CharField(max_length=2, choices=STATES)
     title = models.CharField(max_length=1000, default="", blank=True)
-    slug = models.CharField(max_length=1000, default="", blank=True)
+    slug = models.SlugField(max_length=1000, default="", blank=True)
     lede = models.TextField(default="", blank=True)
     text = models.TextField(default="", blank=True)
     activeTitle = models.CharField(max_length=1000, default="", blank=True)
-    activeSlug = models.CharField(max_length=1000, default="", blank=True)
+    activeSlug = models.SlugField(max_length=1000, default="", blank=True)
     activeLede = models.TextField(default="", blank=True)
     activeText = models.TextField(default="", blank=True)
+    
+    @property
+    def secret(self):
+        try:
+            h = hashlib.new('sha256')
+            h.update(b'oiefwj0iowfjiojepi204i9ue09q2j0d31wq')
+            h.update(self.slug.encode("UTF-8"))
+            h.update(str(self.id).encode("UTF-8"))
+            return h.hexdigest()
+        except Exception as e:
+            print(e)
+        return "secret"
+    
+    @property
+    def devLog(self):
+        return self.game == self.owner.game
     
     @property
     def displayTitle(self):

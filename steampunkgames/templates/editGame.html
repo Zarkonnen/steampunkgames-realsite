@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit {{game.name}} - Steampunk Games{% endblock %}
+
+{% block content %}
+<div id="header">
+    <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
+    <h1>Edit {{game.name}}</h1>
+    <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+</div>
+<img src="/media/{{ game.image }}" id="editProfileGameImage">
+<form method="POST" action="{% url "editGame" game.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <table class="editor">
+    {{ form.as_table }}
+    </table>
+    <input type="submit" value="Update">
+</form>
+
+{% if game.deletable %}
+<form method="POST" action="{% url "editGame" game.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="delete">
+    <input type="submit" value="Delete">
+</form>
+{% else %}
+The game cannot be deleted because they are articles about it.
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<a href="{% url "manageGames" %}">Manage Games</a> • <a href="{% url "dashboard" %}">Dashboard</a>
+{% endblock %}
