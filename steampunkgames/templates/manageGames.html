@@ -21,8 +21,8 @@
 
 <h3>Games</h3>
 {% for g in games %}
-<div class="managerGame" style="clear: both;">
-<a href="{% url "editGame" g.id %}"><img src="/media/{{g.image}}" style="height: 4em; max-width: 8em; margin-right: 1em; float: left;"> {{g.name}}</a> {{g.description}}
+<div class="managerGame" style="clear: both; margin-bottom: 1em;">
+<a href="{% url "editGame" g.id %}"><img src="/media/{{g.image}}" style="height: 4em; max-width: 8em; margin-right: 1em; float: left;"> {{g.name}}</a> <p style="font-size: 60%">{{g.description}}</p>
 </div>
 {% endfor %}
 <div style="clear: both;"></div>
