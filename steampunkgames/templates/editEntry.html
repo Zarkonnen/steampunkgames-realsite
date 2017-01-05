@@ -66,11 +66,12 @@
 {% for e in commandErrors %}
     <p class="commandError">{{ e }}</p>
 {% endfor %}
-<form method="POST" action="{% url "editEntry" entry.id %}">
+<form method="POST" action="{% url "editEntry" entry.id %}" enctype="multipart/form-data">
     {% csrf_token %}
     <table class="editor">
     {{ form.as_table }}
     </table>
+    <p>Splash image is optional and should have a 3:1 aspect ratio.</p>
     <input type="submit" value="Save" id="saveButton">
 </form>
 

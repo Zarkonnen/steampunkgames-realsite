@@ -68,6 +68,7 @@ class Entry(models.Model):
     activeSlug = models.SlugField(max_length=1000, default="", blank=True)
     activeLede = models.TextField(default="", blank=True)
     activeText = models.TextField(default="", blank=True)
+    splashImage = models.FileField(upload_to='splash_images/', blank=True)
     
     @property
     def secret(self):

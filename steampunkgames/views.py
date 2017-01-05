@@ -124,7 +124,7 @@ def profileGame(request):
 class EntryForm(ModelForm):
     class Meta:
         model=Entry
-        fields=["game", "title", "slug", "lede", "text"]
+        fields=["game", "title", "slug", "lede", "text", "splashImage"]
 
 @secure
 def editEntry(request, entryID):
@@ -175,7 +175,7 @@ def editEntry(request, entryID):
                 entry.delete()
                 return HttpResponseRedirect(reverse('steampg.steampunkgames.views.dashboard'))
         else:
-            form = EntryForm(request.POST, instance=entry)
+            form = EntryForm(request.POST, request.FILES, instance=entry)
             if form.is_valid():
                 form.save()
                 return HttpResponseRedirect(reverse('editEntry', args=[entry.id]))
