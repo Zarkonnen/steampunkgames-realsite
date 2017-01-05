@@ -47,7 +47,7 @@
     </form>
 {% endif %}
 <form method="GET" action="{% url "entryDraft" entry.id entry.secret %}">
-    <input type="submit" value="Preview" class="entryTool">
+    <input type="submit" value="Preview" class="entryTool" id="preview">
 </form>
 <form method="POST" action="{% url "editEntry" entry.id %}">
     {% csrf_token %}
@@ -98,6 +98,7 @@ setInterval(function() {
 function dirty() {
     jQuery(".entryTool").prop("disabled", true);
     jQuery("#unsavedChanges").show();
+    jQuery("#preview").hide();
 }
 
 jQuery("#id_game, #id_title, #id_slug, #id_lede, #id_text").keyup(dirty).paste(dirty);
