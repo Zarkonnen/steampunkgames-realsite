@@ -173,3 +173,7 @@ a:visited {
     color: red;
     margin: 0;
 }
+
+#main img {
+  max-width: 100%;
+}
