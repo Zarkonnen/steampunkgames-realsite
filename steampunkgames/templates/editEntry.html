@@ -46,7 +46,7 @@
         <input type="submit" value="Publish" class="entryTool">
     </form>
 {% endif %}
-<form method="GET" action="{% url "entryDraft" entry.slug entry.secret %}">
+<form method="GET" action="{% url "entryDraft" entry.id entry.secret %}">
     <input type="submit" value="Preview" class="entryTool">
 </form>
 <form method="POST" action="{% url "editEntry" entry.id %}">

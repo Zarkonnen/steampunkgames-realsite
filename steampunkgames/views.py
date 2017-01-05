@@ -52,8 +52,8 @@ def game(request, slug):
 def entry(request, slug):
     return render(request, "entry.html", {"entry": go4(Entry, activeSlug=slug, state="pu")})
 
-def entryDraft(request, slug, secret):
-    entry = go4(Entry, slug=slug)
+def entryDraft(request, entryID, secret):
+    entry = go4(Entry, id=entryID)
     if entry.secret != secret:
         return HttpResponseForbidden()
     return render(request, "entryDraft.html", {"entry": entry})

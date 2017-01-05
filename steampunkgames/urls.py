@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^dashboard/games/?$', views.manageGames, name="manageGames"),
     url(r'^dashboard/games/([0-9]+)/?$', views.editGame, name="editGame"),
     url(r'^dashboard/edit/([0-9]+)/?$', views.editEntry, name="editEntry"),
-    url(r'^preview/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$', views.entryDraft, name="entryDraft"),
+    url(r'^preview/([0-9]+)/([a-zA-Z0-9_-]+)/?$', views.entryDraft, name="entryDraft"),
     url(r'^([a-zA-Z0-9_-]+)/?$', views.entry, name="entry")
 ]
