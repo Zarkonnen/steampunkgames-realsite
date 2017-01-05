@@ -3,6 +3,10 @@
 
 {% block title %}{{ entry.activeTitle }} - Steampunk Games{% endblock %}
 
+{% block head %}
+<meta name="keywords" content="steampunk, games, gaming, {{ entry.game.name }}">
+{% endblock %}
+
 {% block content %}
 <div id="header">
     <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
