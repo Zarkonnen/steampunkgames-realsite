@@ -8,6 +8,7 @@
     <img src="{% static "steampunkgames/img/header-calligraphy-1.png" %}">
     <h1>All Games</h1>
     <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+    <p><a href="{% url "home" %}">Home</a></p>
 </div>
 {% for g in games %}
 <h3><a href="{% url "game" g.slug %}">{{ g.name }}</a></h3>

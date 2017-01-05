@@ -12,7 +12,21 @@
     <h1>Steampunk Games</h1>
     <div class="tagline">Steampunk • Dieselpunk • Victorian • Lovecraftian • Weird</div>
     <img src="{% static "steampunkgames/img/header-calligraphy-2.png" %}">
+    <p>
+    {% if hasPrev %}
+    <a href="{% url "page" prevIndex %}">⬅</a>
+    {% endif %}
+    Page {{ page }}
+    {% if hasNext %}
+        <a href="{% url "page" nextIndex %}">➡</a>
+    {% endif %}
+    • <a href="{% url "authors" %}">About</a> • <a href="{% url "games" %}">All Games</a> •
+    {% if user.is_authenticated %}
+        <a href="{% url "dashboard" %}">Dashboard</a>
+    {% endif %}
+    </p>
 </div>
+
 <div id="left">
     <div class="newsfeed">
         {% for e in entries %}
@@ -53,7 +67,5 @@ Page {{ page }}
 • <a href="{% url "authors" %}">About</a> • <a href="{% url "games" %}">All Games</a> •
 {% if user.is_authenticated %}
     <a href="{% url "dashboard" %}">Dashboard</a>
-{% else %}
-    <a href="{% url "login" %}">Login</a>
 {% endif %}
 {% endblock %}
