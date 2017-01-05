@@ -4,7 +4,14 @@
 {% block head %}
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="{% static "steampunkgames/jquery-3.1.1.min.js" %}"></script>
-<script>tinymce.init({ selector:'#id_text', plugins: ["image", "link", "media"], image_list: [
+<script>tinymce.init({
+    selector:'#id_text',
+    plugins: ["image", "link", "media"],
+    setup: function(ed) {
+       ed.on('change', function(e) { dirty(); });
+       ed.on('keyup', function(e) { dirty(); });
+    },
+    image_list: [
 {% for i in user.images.all %}
 { "title": "/media/{{ i.image }}", "value": "/media/{{ i.image }}" },
 {% endfor %}
@@ -98,7 +105,6 @@ setInterval(function() {
 function dirty() {
     jQuery(".entryTool").prop("disabled", true);
     jQuery("#unsavedChanges").show();
-    jQuery("#preview").hide();
 }
 
 jQuery("#id_game, #id_title, #id_slug, #id_lede, #id_text").keyup(dirty).paste(dirty);
