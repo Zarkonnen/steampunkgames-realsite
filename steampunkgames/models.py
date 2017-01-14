@@ -22,7 +22,7 @@ class Profile(models.Model):
     def active(self):
         if self.created > date.today() - timedelta(weeks=5):
             return True
-        return self.game and len(Entry.objects.filter(state='pu', posted__gte=datetime.now() - timedelta(weeks=5)).exclude(game=self.game)) > 0
+        return hasattr(self, 'game') and len(Entry.objects.filter(state='pu', posted__gte=datetime.now() - timedelta(weeks=5)).exclude(game=self.game)) > 0
     
     def __str__(self):
         return self.user.username
