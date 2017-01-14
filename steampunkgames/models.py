@@ -20,12 +20,13 @@ class Profile(models.Model):
     
     @property
     def active(self):
-        if self.created > date.today() - timedelta(weeks=5):
-            return True
-        try:
-            return len(Entry.objects.filter(state='pu', posted__gte=datetime.now() - timedelta(weeks=5)).exclude(game=self.game)) > 0
-        except:
-            return False
+        return True
+        #if self.created > date.today() - timedelta(weeks=5):
+        #    return True
+        #try:
+        #    return len(Entry.objects.filter(state='pu', posted__gte=datetime.now() - timedelta(weeks=5)).exclude(game=self.game)) > 0
+        #except:
+        #    return False
     
     def __str__(self):
         return self.user.username
