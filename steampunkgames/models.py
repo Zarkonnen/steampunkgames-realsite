@@ -45,8 +45,7 @@ class Game(models.Model):
     
     @property
     def onList(self):
-        return True
-        #return self.owner and self.owner.profile.active
+        return self.owner# and self.owner.profile.active
     
     def __str__(self):
         if self.owner:
