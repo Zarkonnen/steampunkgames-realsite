@@ -13,6 +13,7 @@ body {
   padding: 0;
   padding-bottom: 2rem;
   background-image: url('img/steamengine2.png');
+  color: #1b0b01;
   /*background-size: 450px;
     background-repeat: no-repeat;*/
 }
@@ -23,26 +24,28 @@ h4,
 h5,
 h6 {
   text-transform: uppercase;
-  color: #a53030;
+  color: #892828;
   font-weight: normal;
   text-align: center;
 }
-.lede {
+h1 {
   color: #a53030;
-  font-weight: normal;
+}
+.lede {
+  font-weight: bold;
 }
 p {
   margin-top: 1em;
   margin-bottom: 1em;
 }
+a:visited,
 a:link {
-  color: #a53030;
+  color: #c33939;
   text-decoration: none;
 }
 a:hover,
-a:active,
-a:visited {
-  color: #750000;
+a:active {
+  color: #f84848;
   text-decoration: none;
 }
 #content {

@@ -11,22 +11,13 @@ class Profile(models.Model):
     twitter = models.CharField(max_length=1000, default="", blank=True)
     bio = models.TextField(default="", blank=True)
     image = models.FileField(upload_to='profile_images/', blank=True)
+    active = models.BooleanField(default=True)
     
     @property
     def displayName(self):
         if len(self.name) > 0:
             return self.name
         return self.user.username
-    
-    @property
-    def active(self):
-        return True
-        #if self.created > date.today() - timedelta(weeks=5):
-        #    return True
-        #try:
-        #    return len(Entry.objects.filter(state='pu', posted__gte=datetime.now() - timedelta(weeks=5)).exclude(game=self.game)) > 0
-        #except:
-        #    return False
     
     def __str__(self):
         return self.user.username
@@ -73,6 +64,15 @@ class Entry(models.Model):
     activeLede = models.TextField(default="", blank=True)
     activeText = models.TextField(default="", blank=True)
     splashImage = models.FileField(upload_to='splash_images/', blank=True)
+    squareThumbImage = models.FileField(upload_to='square_thumb_images/', blank=True)
+    
+    @property
+    def bestSquareThumbImage(self):
+        if self.squareThumbImage:
+            return self.squareThumbImage
+        if self.game and self.game.image:
+            return self.game.image
+        return self.splashImage
     
     @property
     def secret(self):

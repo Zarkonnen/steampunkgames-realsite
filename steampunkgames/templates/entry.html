@@ -5,6 +5,12 @@
 
 {% block head %}
 <meta name="keywords" content="steampunk, games, gaming, {{ entry.game.name }}">
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:site" content="@steampunkgs" />
+<meta name="twitter:title" content="{{ entry.activeTitle }}" />
+<meta name="twitter:description" content="{{ entry.activeLede }}" />
+<meta name="twitter:image" content="http://steampunk-games.com/media/{{ entry.bestSquareThumbImage }}" />
 {% endblock %}
 
 {% block content %}
