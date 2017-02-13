@@ -36,7 +36,7 @@ class Game(models.Model):
     
     @property
     def onList(self):
-        return not (self.owner is None)# and self.owner.profile.active
+        return not (self.owner is None) and self.owner.profile.active
     
     def __str__(self):
         if self.owner:
