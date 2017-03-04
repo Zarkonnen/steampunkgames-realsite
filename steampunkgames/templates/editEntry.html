@@ -4,18 +4,22 @@
 {% block head %}
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="{% static "steampunkgames/jquery-3.1.1.min.js" %}"></script>
-<script>tinymce.init({
+<script>
+var imglist = [
+{% for i in user.images.all %}
+{ "title": "/media/{{ i.image }}", "value": "/media/{{ i.image }}" },
+{% endfor %}
+];
+imglist.reverse();
+tinymce.init({
     selector:'#id_text',
     plugins: ["image", "link", "media"],
     setup: function(ed) {
        ed.on('change', function(e) { dirty(); });
        ed.on('keyup', function(e) { dirty(); });
     },
-    image_list: [
-{% for i in user.images.all %}
-{ "title": "/media/{{ i.image }}", "value": "/media/{{ i.image }}" },
-{% endfor %}
-] });</script>
+    image_list: imglist });
+</script>
 {% endblock %}
 
 {% block title %}Edit Article - Steampunk Games{% endblock %}
